@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">916151694560-m6f4ihtagktsenqct68vjh2rp55neep7.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">916151694560</string>
+    <string name="google_api_key" translatable="false">AIzaSyBh_P2w-wpE8i-C7-4_-BBPYqviRhp60E8</string>
+    <string name="google_app_id" translatable="false">1:916151694560:android:ba92d6f2a636d4f814cc85</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBh_P2w-wpE8i-C7-4_-BBPYqviRhp60E8</string>
+    <string name="google_storage_bucket" translatable="false">courseimagelabelingkotlin.appspot.com</string>
+    <string name="project_id" translatable="false">courseimagelabelingkotlin</string>
+</resources>
