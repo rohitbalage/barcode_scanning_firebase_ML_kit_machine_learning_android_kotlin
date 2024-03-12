@@ -20,9 +20,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.google.mlkit.vision.barcode.Barcode
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import java.io.IOException
 
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     // firebase
     var scanner : BarcodeScanner? = null
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         val rotated = rotateBitmap(input!!)
         innerImage?.setImageBitmap(rotated);
 
-        val image = InputImage.fromBitmap(rotated, 0)
+        val image = InputImage.fromBitmap(rotated!!0)
 
         val result = scanner?.process(image)
             ?.addOnSuccessListener { barcodes ->
@@ -130,6 +131,7 @@ class MainActivity : AppCompatActivity() {
                             val ssid = barcode.wifi!!.ssid
                             val password = barcode.wifi!!.password
                             val type = barcode.wifi!!.encryptionType
+                            resultTv?.setText(ssid+"\n"+password+"\n"+type)
                         }
                         Barcode.TYPE_URL -> {
                             val title = barcode.url!!.title
