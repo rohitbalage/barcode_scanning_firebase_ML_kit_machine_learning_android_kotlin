@@ -34,6 +34,9 @@ class MainActivity : AppCompatActivity() {
     var innerImage:ImageView? = null
     var resultTv: TextView? = null
     private var image_uri: Uri? = null
+
+    // firebase
+    var scanner : BarcodeScanner? = null
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +114,39 @@ class MainActivity : AppCompatActivity() {
         innerImage?.setImageBitmap(rotated);
 
         val image = InputImage.fromBitmap(rotated, 0)
+
+        val result = scanner?.process(image)
+            ?.addOnSuccessListener { barcodes ->
+                for (barcode in barcodes) {
+                    val bounds = barcode.boundingBox
+                    val corners = barcode.cornerPoints
+
+                    val rawValue = barcode.rawValue
+
+                    val valueType = barcode.valueType
+                    // See API reference for complete list of supported types
+                    when (valueType) {
+                        Barcode.TYPE_WIFI -> {
+                            val ssid = barcode.wifi!!.ssid
+                            val password = barcode.wifi!!.password
+                            val type = barcode.wifi!!.encryptionType
+                        }
+                        Barcode.TYPE_URL -> {
+                            val title = barcode.url!!.title
+                            val url = barcode.url!!.url
+                            resultTv?.setText(title+"\n"+url)
+                        }
+
+                        Barcode.TYPE_EMAIL-> {
+                            val title = barcode.email!!
+                        }
+                    }
+                }
+            }
+            ?.addOnFailureListener {
+                // Task failed with an exception
+                // ...
+            }
     }
 
     //TODO takes URI of the image and returns bitmap
@@ -153,4 +189,10 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+
+    // to close the scannner
+    override fun onDestroy() {
+        super.onDestroy()
+        scanner?.close()
+    }
 }
